@@ -76,6 +76,11 @@ function calculateProductPrice(product, employee, selectedOptions) {
       price = this.calculateLTDPrice(product, employee, selectedOptions)
       employerContribution = this.getEmployerContribution(product.employerContribution, price)
       return this.formatPrice(price - employerContribution)
+    case 'commuter':
+      price = this.calculateCommuterPrice(product, selectedOptions)
+      employerContribution = this.getEmployerContribution(product.employerContribution, price)
+      return this.formatPrice(price - employerContribution)
+
     default:
       throw new Error(`Unknown product type: ${product.type}`)
   }
