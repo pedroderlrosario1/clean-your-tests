@@ -115,6 +115,7 @@ describe('pricing', () => {
     let calculateVolLifePricePerRoleSpy
     let calculateLTDPriceSpy
     let calculateVolLifePriceSpy
+    let calculateCommuterPriceSpy
 
     beforeEach(() => {
       sandbox = sinon.createSandbox()
@@ -124,6 +125,7 @@ describe('pricing', () => {
       calculateVolLifePricePerRoleSpy = sandbox.spy(pricing, 'calculateVolLifePricePerRole')
       calculateLTDPriceSpy = sandbox.spy(pricing, 'calculateLTDPrice')
       calculateVolLifePriceSpy = sandbox.spy(pricing, 'calculateVolLifePrice')
+      calculateCommuterPriceSpy = sandbox.spy(pricing, 'calculateCommuterPrice')
     })
 
     afterEach(() => {
@@ -170,6 +172,29 @@ describe('pricing', () => {
 
       expect(price).to.equal(22.04)
       expect(calculateLTDPriceSpy).to.have.callCount(1)
+      expect(getEmployerContributionSpy).to.have.callCount(1)
+      expect(formatPriceSpy).to.have.callCount(1)
+    })
+
+    it('returns the price of selected commuter product (parking)', () => {
+      const selectedOptions = {
+        benefit: 'parking'
+      }
+      const price = pricing.calculateProductPrice(products.commuter, employee, selectedOptions)
+      expect(price).to.equal(175)
+      expect(calculateCommuterPriceSpy).to.have.callCount(1)
+      expect(getEmployerContributionSpy).to.have.callCount(1)
+      expect(formatPriceSpy).to.have.callCount(1)
+    })
+
+    it('returns the price of selected commuter product (train)', () => {
+      const selectedOptions = {
+        benefit: 'train'
+      }
+      const price = pricing.calculateProductPrice(products.commuter, employee, selectedOptions)
+
+      expect(price).to.equal(9.75)
+      expect(calculateCommuterPriceSpy).to.have.callCount(1)
       expect(getEmployerContributionSpy).to.have.callCount(1)
       expect(formatPriceSpy).to.have.callCount(1)
     })
