@@ -55,6 +55,14 @@ function calculateLTDPrice(product, employee, selectedOptions) {
   return price
 }
 
+function calculateCommuterPrice(product, selectedOptions) {
+  const cost = product.costs.find((cost) => {
+    return cost.type === selectedOptions.benefit
+  })
+  return cost.price
+}
+
+
 function calculateProductPrice(product, employee, selectedOptions) {
   let price
   let employerContribution
@@ -81,5 +89,7 @@ module.exports = {
   calculateVolLifePrice,
   calculateLTDPrice,
   calculateProductPrice,
+  calculateCommuterPrice,
+
 }
 

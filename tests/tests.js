@@ -88,6 +88,25 @@ describe('pricing', () => {
     })
   })
 
+  describe('calculateCommuterPrice', () => {
+    it('returns the price of selected commuter product without employer contribution (parking)', () => {
+      const selectedOptions = {
+        benefit: 'parking'
+      }
+      const price = pricing.calculateCommuterPrice(products.commuter, selectedOptions)
+      expect(price).to.equal(250)
+    })
+
+    it('returns the price of selected commuter product without employer contribution (train)', () => {
+      const selectedOptions = {
+        benefit: 'train'
+      }
+      const price = pricing.calculateCommuterPrice(products.commuter, selectedOptions)
+
+      expect(price).to.equal(84.75)
+    })
+  })
+
   describe('calculateProductPrice', () => {
     let sandbox
 
